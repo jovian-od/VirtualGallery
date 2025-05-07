@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://mxrnxkw3d67l"]
+[gd_scene load_steps=16 format=3 uid="uid://mxrnxkw3d67l"]
 
 [ext_resource type="Script" uid="uid://b7s1cvb33ytql" path="res://scripts/player.gd" id="1_3f0ma"]
 [ext_resource type="Texture2D" uid="uid://ci2jec4miq1n3" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_loqtw"]
@@ -19,6 +19,12 @@ uv1_triplanar = true
 albedo_texture = ExtResource("1_loqtw")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4yjv"]
+albedo_color = Color(0.0326666, 0.49, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhauw"]
+albedo_color = Color(0.53, 0.300333, 0, 1)
+
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_036b0"]
 panorama = ExtResource("2_3f0ma")
 
@@ -34,12 +40,13 @@ glow_enabled = true
 [node name="world" type="Node3D"]
 
 [node name="player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.278144, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38811, 0)
 script = ExtResource("1_3f0ma")
 
 [node name="playerCollider" type="CollisionShape3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_j6sff")
+debug_color = Color(0, 0.6, 0.701961, 1)
 
 [node name="head" type="Node3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
@@ -48,9 +55,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 fov = 68.2
 script = ExtResource("2_6psia")
 
-[node name="RayCast3D" type="RayCast3D" parent="player/head/Camera3D"]
+[node name="RayCastHead" type="RayCast3D" parent="player/head/Camera3D"]
 target_position = Vector3(0, 0, -3)
 collide_with_areas = true
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="player"]
+
+[node name="RayCastFeet" type="RayCast3D" parent="player"]
+target_position = Vector3(0, -0.5, 0)
 
 [node name="stage" type="Node3D" parent="."]
 physics_interpolation_mode = 1
@@ -68,6 +80,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.236525, -0.552933, -0.24960
 use_collision = true
 size = Vector3(40, 1, 40)
 material = SubResource("StandardMaterial3D_aqk2v")
+metadata/surfaceType = "default"
 
 [node name="debugLabel" type="RichTextLabel" parent="stage"]
 modulate = Color(0.209046, 0.648167, 0.502491, 1)
@@ -77,6 +90,20 @@ offset_bottom = 28.0
 scale = Vector2(1, 0.914286)
 text = "  Virtual Musem indevmode"
 autowrap_mode = 0
+
+[node name="Grass" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4303, -0.00773048, 0.000366211)
+use_collision = true
+size = Vector3(5, 0.1, 5)
+material = SubResource("StandardMaterial3D_u4yjv")
+metadata/surfaceType = "grass"
+
+[node name="Dirt" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4201, 9.53674e-07, -4.99372)
+use_collision = true
+size = Vector3(5, 0.1, 5)
+material = SubResource("StandardMaterial3D_lhauw")
+metadata/surfaceType = "dirt"
 
 [node name="env" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0464887, 0, 0)

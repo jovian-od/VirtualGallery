@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=2000
 window/size/viewport_height=1300
-window/size/mode=3
 window/size/initial_position_type=0
 window/size/initial_position=Vector2i(0, -200)
 
