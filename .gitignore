@@ -17,5 +17,10 @@ mono_crash.*.json
 # shadercache
 .godot/shadercache/*
 
-# mac bs
+# mac metadata
 .DS_store
+
+# assets in main dir
+
+./*.jpg
+./*.png
